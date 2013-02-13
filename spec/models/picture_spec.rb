@@ -29,8 +29,8 @@ describe Picture do
       @pic = Picture.create!(@attr)
     end
 
-    it "should have a advertisements attribute" do
-      @pic.should respond_to(:advertisements)
+    it "should have a advertisement attribute" do
+      @pic.should respond_to(:advertisement)
     end
   end
 end

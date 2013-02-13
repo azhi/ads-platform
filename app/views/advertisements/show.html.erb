@@ -1,0 +1,10 @@
+<%= render 'ads_pictures' unless @ads.pictures.nil? %>
+<p> <%= @ads.content %> </p>
+<% unless @ads.type.nil? %>
+  <p> Type: <%= @ads.type.name %> </p>
+<% end %>
+
+<%= link_to "edit", edit_advertisement_path(@ads) %>
+<%= link_to "delete", @ads, :method => :delete, :confirm => "Sure?", :title => "Delete ads #{@ads.id}" %> <br />
+
+<%= link_to "back to index", advertisements_path %>

@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20130212201202) do
 
   create_table "advertisements", :force => true do |t|
-    t.string   "content"
+    t.text     "content"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "type_id"
@@ -22,15 +22,11 @@ ActiveRecord::Schema.define(:version => 20130212201202) do
     t.date     "published_at"
   end
 
-  create_table "advertisements_pictures", :force => true do |t|
-    t.integer "advertisement_id"
-    t.integer "picture_id"
-  end
-
   create_table "pictures", :force => true do |t|
     t.string   "url"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.integer  "advertisement_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "types", :force => true do |t|

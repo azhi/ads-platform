@@ -1,10 +1,13 @@
 class Advertisement < ActiveRecord::Base
-  attr_accessible :content, :published_at
+  attr_accessible :content, :published_at, :type_id, :pictures_attributes
 
   belongs_to :type
-  has_and_belongs_to_many :pictures
+  has_many :pictures, :dependent => :destroy
 
   validates :content, :presence => true, :length => { :maximum => 2000 }
+
+  accepts_nested_attributes_for :pictures, :reject_if => :all_blank,
+                                :allow_destroy => true
 
   state_machine :initial => :rough do
     after_transition :approved => :published do |advertisement, transition|

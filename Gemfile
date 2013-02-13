@@ -23,6 +23,7 @@ end
 gem 'jquery-rails'
 gem 'enumerize', '>= 0.5.0'
 gem 'simple_form', '>= 2.0.0'
+gem 'nested_form', '>= 0.3.0'
 gem 'state_machine', '>= 1.1.0'
 
 group :development do
@@ -31,6 +32,7 @@ end
 
 group :test do
   gem 'rspec-rails', '>= 2.12.0'
+  gem 'webrat', '>= 0.7.0'
 end
 
 # To use ActiveModel has_secure_password

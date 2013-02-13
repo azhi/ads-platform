@@ -1,0 +1,10 @@
+<%= simple_nested_form_for @ads do |f| %>
+  <%= f.association :type %>
+  <%= f.input :content, :input_html => { :rows => 3 } %>
+  <%= f.fields_for :pictures do |pic_form| %>
+    <%= pic_form.input :url %>
+    <%= pic_form.link_to_remove 'Delete this picture' %>
+  <% end %>
+  <%= f.link_to_add 'Add picture', :pictures %>
+  <%= f.button :submit %>
+<% end %>
