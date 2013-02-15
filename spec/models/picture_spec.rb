@@ -9,28 +9,13 @@ describe Picture do
     Picture.create!(@attr)
   end
 
-  it "should require non-empty url" do
-    pic = Picture.new(@attr.merge(:url => ""))
-    pic.should_not be_valid
-  end
+  it { should validate_presence_of(:url) }
+
+  it { should belong_to(:advertisement) }
 
   it "should require url to be url" do
-    pic = Picture.new(@attr.merge(:url => "non-http:/somewrongstuff"))
-    pic.should_not be_valid
+    should_not allow_value("non-http:/somewrongstuff").for(:url)
+    should_not allow_value("http://img5.imagebanana.com/img/w8kswt57/SMTH.non-jpg").for(:url)
   end
 
-  it "should require url end with picture extention" do
-    pic = Picture.new(@attr.merge(:url => "http://img5.imagebanana.com/img/w8kswt57/SMTH.non-jpg"))
-    pic.should_not be_valid
-  end
-
-  describe "association testing" do
-    before(:each) do
-      @pic = Picture.create!(@attr)
-    end
-
-    it "should have a advertisement attribute" do
-      @pic.should respond_to(:advertisement)
-    end
-  end
 end

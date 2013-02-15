@@ -12,22 +12,22 @@ describe AdvertisementsController do
 
     it "should be succesfull" do
       get :show, :id => @ads
-      response.should be_success
+      expect(response).to be_success
     end
 
     it "should find the right ads" do
       get :show, :id => @ads
-      assigns(:ads).should == @ads
+      expect(assigns(:ads)).to eq(@ads)
     end
 
     it "should display content of the ads" do
       get :show, :id => @ads
-      response.should have_selector("p", :content => @ads.content)
+      expect(response).to have_selector("p", :content => @ads.content)
     end
 
     it "should display ads picture" do
       get :show, :id => @ads
-      response.should have_selector("img", :src => @ads.pictures.first.url)
+      expect(response).to have_selector("img", :src => @ads.pictures.first.url)
     end
   end
 
@@ -42,13 +42,13 @@ describe AdvertisementsController do
 
     it "should be successfull" do
       get :index
-      response.should be_success
+      expect(response).to be_success
     end
 
     it "should have an element for each ads" do
       get :index
       @all_ads.each do |ads|
-        response.should have_selector("li", :content => ads.content.first(6))
+        expect(response).to have_selector("li", :content => ads.content.first(6))
       end
     end
   end
@@ -61,7 +61,7 @@ describe AdvertisementsController do
 
     it "should be successfull" do
       get :edit, :id => @ads
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -78,7 +78,7 @@ describe AdvertisementsController do
 
       it "should re-render edit page" do
         put :update, :id => @ads, :advertisement => @attr
-        response.should render_template(:edit)
+        expect(response).to render_template(:edit)
       end
     end
 
@@ -90,12 +90,12 @@ describe AdvertisementsController do
       it "should change ads attributes" do
         put :update, :id => @ads, :advertisement => @attr
         @ads.reload
-        @ads.content.should == @attr[:content]
+        expect(@ads.content).to eq(@attr[:content])
       end
 
       it "should redirect to ads show page" do
         put :update, :id => @ads, :advertisement => @attr
-        response.should redirect_to(advertisement_path(@ads))
+        expect(response).to redirect_to(advertisement_path(@ads))
       end
     end
   end
@@ -103,7 +103,7 @@ describe AdvertisementsController do
   describe "get :new" do
     it "should be succesfull" do
       get :new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -114,14 +114,14 @@ describe AdvertisementsController do
       end
 
       it "shouldn't create an ads" do
-        lambda do
+        expect {
           post :create, :advertisement => @attr
-        end.should_not change(Advertisement, :count)
+        }.not_to change(Advertisement, :count)
       end
 
       it "should re-render new page" do
         post :create, :advertisement => @attr
-        response.should render_template(:new)
+        expect(response).to render_template(:new)
       end
     end
 
@@ -131,14 +131,14 @@ describe AdvertisementsController do
       end
 
       it "should create an ads" do
-        lambda do
+        expect {
           post :create, :advertisement => @attr
-        end.should change(Advertisement, :count).by(1)
+        }.to change(Advertisement, :count).by(1)
       end
 
       it "should redirect to ads show page" do
         post :create, :advertisement => @attr
-        response.should redirect_to(advertisement_path(assigns(:ads)))
+        expect(response).to redirect_to(advertisement_path(assigns(:ads)))
       end
     end
   end
@@ -150,14 +150,14 @@ describe AdvertisementsController do
     end
 
     it "should delete user" do
-      lambda do
+      expect {
         delete :destroy, :id => @ads
-      end.should change(Advertisement, :count).by(-1)
+      }.to change(Advertisement, :count).by(-1)
     end
 
     it "should redirect to index page" do
       delete :destroy, :id => @ads
-      response.should redirect_to(advertisements_path)
+      expect(response).to redirect_to(advertisements_path)
     end
   end
 end

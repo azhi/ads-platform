@@ -13,13 +13,13 @@ describe TypesController do
 
     it "should be successfull" do
       get :index
-      response.should be_success
+      expect(response).to be_success
     end
 
     it "should have an element for each ads" do
       get :index
       @types.each do |type|
-        response.should have_selector("li", :content => type.name)
+        expect(response).to have_selector("li", :content => type.name)
       end
     end
   end
@@ -31,7 +31,7 @@ describe TypesController do
 
     it "should be successfull" do
       get :edit, :id => @type
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -47,7 +47,7 @@ describe TypesController do
 
       it "should re-render edit page" do
         put :update, :id => @type, :type => @attr
-        response.should render_template(:edit)
+        expect(response).to render_template(:edit)
       end
     end
 
@@ -59,12 +59,12 @@ describe TypesController do
       it "should change type attributes" do
         put :update, :id => @type, :type => @attr
         @type.reload
-        @type.name.should == @attr[:name]
+        expect(@type.name).to eq(@attr[:name])
       end
 
       it "should redirect to index page" do
         put :update, :id => @type, :type => @attr
-        response.should redirect_to(types_path)
+        expect(response).to redirect_to(types_path)
       end
     end
   end
@@ -72,7 +72,7 @@ describe TypesController do
   describe "get :new" do
     it "should be succesfull" do
       get :new
-      response.should be_success
+      expect(response).to be_success
     end
   end
 
@@ -83,14 +83,14 @@ describe TypesController do
       end
 
       it "shouldn't create a type" do
-        lambda do
+        expect {
           post :create, :type => @attr
-        end.should_not change(Type, :count)
+        }.not_to change(Type, :count)
       end
 
       it "should re-render new page" do
         post :create, :type => @attr
-        response.should render_template(:new)
+        expect(response).to render_template(:new)
       end
     end
 
@@ -100,14 +100,14 @@ describe TypesController do
       end
 
       it "should create a type" do
-        lambda do
+        expect {
           post :create, :type => @attr
-        end.should change(Type, :count).by(1)
+        }.to change(Type, :count).by(1)
       end
 
       it "should redirect to index page" do
         post :create, :type => @attr
-        response.should redirect_to(types_path)
+        expect(response).to redirect_to(types_path)
       end
     end
   end
@@ -118,14 +118,14 @@ describe TypesController do
     end
 
     it "should delete type" do
-      lambda do
+      expect {
         delete :destroy, :id => @type
-      end.should change(Type, :count).by(-1)
+      }.to change(Type, :count).by(-1)
     end
 
     it "should redirect to index page" do
       delete :destroy, :id => @type
-      response.should redirect_to(types_path)
+      expect(response).to redirect_to(types_path)
     end
   end
 end
