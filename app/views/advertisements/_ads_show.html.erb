@@ -1,0 +1,6 @@
+<% unless ads.type.nil? %>
+  <p> Type: <%= ads.type.name %> </p>
+<% end %>
+<p> Status: <%= ads.state.humanize %> </p>
+<%= render 'advertisements/ads_pictures', :ads => ads unless ads.pictures.nil? %>
+<p> <%= ads.content %> </p>

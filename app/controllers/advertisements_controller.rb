@@ -4,7 +4,8 @@ class AdvertisementsController < ApplicationController
   end
 
   def new
-    @ads = Advertisement.new
+    @user = User.find(params[:user_id])
+    @ads = @user.advertisements.build
     @ads.pictures.build
   end
 

@@ -6,11 +6,23 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-types = Type.create([{ name: "Type1" }, { name: "Type2" }, { name: "Type3" }])
+types = []
+3.times do |i|
+  types << Type.create(name: "Type#{i}")
+end
+
+users = []
+2.times do |i|
+  user = User.new(nickname: "User#{i}", email: "user#{i}@example.com",
+                  password: "foobar12", password_confirmation: "foobar12")
+  user.skip_confirmation!
+  user.save
+  users << user
+end
 
 ads = []
-ads << types.first.advertisements.create(:content => "Bla-bla-bla")
-ads << types.second.advertisements.create(:content => "Test advertisement")
+ads << Advertisement.create(content: "Bla-bla-bla", type_id: types.first.id, user_id: users.first.id)
+ads << Advertisement.create(content: "Bla-bla-bla", type_id: types.second.id, user_id: users.first.id)
 
 ads.first.pictures.create([{ url: "http://fc05.deviantart.net/fs71/i/2011/265/f/1/limbo__or_smth_like_that_by_shine_blue-d4akqph.jpg" },
                            { url: "http://www.scificool.com/images/2012/01/Will-Smth-and-Tommy-Lee-Jones-in-Men-in-Black-3-2012-Movie-Image.jpg" }])

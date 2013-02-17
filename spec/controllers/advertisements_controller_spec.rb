@@ -5,9 +5,8 @@ describe AdvertisementsController do
 
   describe "get :show" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
-      @ads = @type.advertisements.create!(:content => "Bla bla")
-      @ads.pictures.create(:url => "http://someurl.com/somepicture.jpg")
+      @ads = FactoryGirl.create(:advertisement)
+      @pic = FactoryGirl.create(:picture, :advertisement_id => @ads.id)
     end
 
     it "should be succesfull" do
@@ -33,11 +32,10 @@ describe AdvertisementsController do
 
   describe "get :index" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
       @all_ads = []
-      @all_ads << @type.advertisements.create!(:content => "Bla bla")
-      @all_ads << @type.advertisements.create!(:content => "Other bla bla")
-      @all_ads << @type.advertisements.create!(:content => "Nice bla bla")
+      5.times do
+        @all_ads << FactoryGirl.create(:advertisement)
+      end
     end
 
     it "should be successfull" do
@@ -55,8 +53,7 @@ describe AdvertisementsController do
 
   describe "get :edit" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
-      @ads = @type.advertisements.create!(:content => "Bla bla")
+      @ads = FactoryGirl.create(:advertisement)
     end
 
     it "should be successfull" do
@@ -67,8 +64,7 @@ describe AdvertisementsController do
 
   describe "put :update" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
-      @ads = @type.advertisements.create!(:content => "Bla bla")
+      @ads = FactoryGirl.create(:advertisement)
     end
 
     describe "failures: " do
@@ -84,7 +80,7 @@ describe AdvertisementsController do
 
     describe "success: " do
       before(:each) do
-        @attr = { :content => "Other bla-bla" }
+        @attr = FactoryGirl.attributes_for(:advertisement)
       end
 
       it "should change ads attributes" do
@@ -101,8 +97,12 @@ describe AdvertisementsController do
   end
 
   describe "get :new" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+    end
+
     it "should be succesfull" do
-      get :new
+      get :new, :user_id => @user.id
       expect(response).to be_success
     end
   end
@@ -110,7 +110,9 @@ describe AdvertisementsController do
   describe "post :create" do
     describe "failures: " do
       before(:each) do
-        @attr = { :content => "" }
+        @user = FactoryGirl.create(:user)
+        @type = FactoryGirl.create(:type)
+        @attr = { :content => "", :user_id => @user.id, :type_id => @type.id }
       end
 
       it "shouldn't create an ads" do
@@ -127,7 +129,9 @@ describe AdvertisementsController do
 
     describe "success: " do
       before(:each) do
-        @attr = { :content => "Bla bla" }
+        @user = FactoryGirl.create(:user)
+        @type = FactoryGirl.create(:type)
+        @attr = FactoryGirl.attributes_for(:advertisement, :user_id => @user.id, :type_id => @type.id)
       end
 
       it "should create an ads" do
@@ -145,8 +149,7 @@ describe AdvertisementsController do
 
   describe "delete :destroy" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
-      @ads = @type.advertisements.create!(:content => "Bla bla")
+      @ads = FactoryGirl.create(:advertisement)
     end
 
     it "should delete user" do

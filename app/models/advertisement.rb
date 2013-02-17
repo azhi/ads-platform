@@ -1,10 +1,13 @@
 class Advertisement < ActiveRecord::Base
-  attr_accessible :content, :published_at, :type_id, :pictures_attributes
+  attr_accessible :content, :published_at, :type_id, :user_id, :pictures_attributes
 
   belongs_to :type
   has_many :pictures, :dependent => :destroy
+  belongs_to :user
 
   validates :content, :presence => true, :length => { :maximum => 2000 }
+  validates :type, :presence => true
+  validates :user, :presence => true
 
   accepts_nested_attributes_for :pictures, :reject_if => :all_blank,
                                 :allow_destroy => true

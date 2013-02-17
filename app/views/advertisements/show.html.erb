@@ -1,8 +1,4 @@
-<% unless @ads.type.nil? %>
-  <p> Type: <%= @ads.type.name %> </p>
-<% end %>
-<%= render 'ads_pictures' unless @ads.pictures.nil? %>
-<p> <%= @ads.content %> </p>
+<%= render 'ads_show', :ads => @ads %>
 
 <%= link_to "edit", edit_advertisement_path(@ads) %>
 <%= delete_link @ads, "Delete ads #{@ads.id}" %> <br /> <br />

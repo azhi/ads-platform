@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Type do
   before(:each) do
-    @attr = {:name => "Some type"}
+    @attr = FactoryGirl.attributes_for(:type)
   end
 
   it "should create a type given valid attributes" do

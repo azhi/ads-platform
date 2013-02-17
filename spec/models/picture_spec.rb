@@ -2,7 +2,8 @@ require 'spec_helper'
 
 describe Picture do
   before(:each) do
-    @attr = {:url => "http://img5.imagebanana.com/img/w8kswt57/SMTH.jpg"}
+    @ads = FactoryGirl.create(:advertisement)
+    @attr = FactoryGirl.attributes_for(:picture, :advertisement_id => @ads.id)
   end
 
   it "should create a picture given valid attributes" do

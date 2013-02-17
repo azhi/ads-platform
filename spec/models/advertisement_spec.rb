@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Advertisement do
   before(:each) do
-    @attr = {:content => "Some content"}
+    @type = FactoryGirl.create(:type)
+    @user = FactoryGirl.create(:user)
+    @attr = FactoryGirl.attributes_for(:advertisement, :type_id => @type.id, :user_id => @user.id)
   end
 
   it "should create an advertisement given valid attributes" do
@@ -15,11 +17,13 @@ describe Advertisement do
 
   it { should belong_to(:type) }
 
+  it { should belong_to(:user) }
+
   it { should have_many(:pictures) }
 
   describe "states testing" do
     before(:each) do
-      @ads = Advertisement.create!(@attr)
+      @ads = FactoryGirl.create(:advertisement)
     end
 
     it "should have state attribute" do

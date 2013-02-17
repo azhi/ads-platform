@@ -6,9 +6,9 @@ describe TypesController do
   describe "get :index" do
     before(:each) do
       @types = []
-      @types << Type.create!(:name => "Some type")
-      @types << Type.create!(:name => "Some other type")
-      @types << Type.create!(:name => "Some nice type")
+      5.times do
+        @types << FactoryGirl.create(:type)
+      end
     end
 
     it "should be successfull" do
@@ -26,7 +26,7 @@ describe TypesController do
 
   describe "get :edit" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
+      @type = FactoryGirl.create(:type)
     end
 
     it "should be successfull" do
@@ -37,7 +37,7 @@ describe TypesController do
 
   describe "put :update" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
+      @type = FactoryGirl.create(:type)
     end
 
     describe "failures: " do
@@ -53,7 +53,7 @@ describe TypesController do
 
     describe "success: " do
       before(:each) do
-        @attr = { :name => "Other type" }
+        @attr = FactoryGirl.attributes_for(:type)
       end
 
       it "should change type attributes" do
@@ -96,7 +96,7 @@ describe TypesController do
 
     describe "success: " do
       before(:each) do
-        @attr = { :name => "Some type" }
+        @attr = FactoryGirl.attributes_for(:type)
       end
 
       it "should create a type" do
@@ -114,7 +114,7 @@ describe TypesController do
 
   describe "delete :destroy" do
     before(:each) do
-      @type = Type.create!(:name => "Some type")
+      @type = FactoryGirl.create(:type)
     end
 
     it "should delete type" do
