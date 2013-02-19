@@ -3,10 +3,16 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
+require 'turnip/capybara'
+
+Capybara.app_host = "http://example.com/"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
+
+# Loading all steps from spec/acceptance/steps
+Dir.glob("spec/acceptance/steps/**/*steps.rb") { |f| load f, true }
 
 RSpec.configure do |config|
   # ## Mock Framework

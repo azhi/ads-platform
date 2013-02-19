@@ -31,4 +31,6 @@ group :test do
   gem 'webrat', '>= 0.7.0'
   gem 'shoulda-matchers', '>= 1.4.0'
   gem 'factory_girl_rails', '>= 4.2.0'
+  gem 'turnip', '>= 1.1.0'
+  gem 'capybara', '>= 2.0.0'
 end
