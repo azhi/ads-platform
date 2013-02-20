@@ -1,16 +1,15 @@
 class PicturesController < ApplicationController
+  load_and_authorize_resource
+
   def create
-    @pic = Picture.new(params[:picture])
-    render :action => "new" unless @pic.save
+    render :action => "new" unless @picture.save
   end
 
   def update
-    @pic = Picture.find(params[:id])
-    render :action => "edit" unless @pic.update_attributes(params[:picture])
+    render :action => "edit" unless @picture.update_attributes(params[:picture])
   end
 
   def destroy
-    @pic = Picture.find(params[:id])
-    @pic.destroy
+    @picture.destroy
   end
 end

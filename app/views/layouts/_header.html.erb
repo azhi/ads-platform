@@ -1,16 +1,17 @@
- <% logo = image_tag("rails.png", :alt =>"Ads-platform", :class => "round") %>
- <%= link_to logo, root_path %>
+<% logo = image_tag("rails.png", :alt =>"Ads-platform", :class => "round") %>
+<%= link_to logo, root_path %>
 <header>
- <nav class="round">
-  <ul>
-   <li><%= link_to "Home", root_path %></li>
-   <% if user_signed_in? %>
-     <li><%= link_to "My page", current_user %></li>
-     <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-   <% else %>
-     <li><%= link_to "Sign in", new_session_path(:user) %></li>
-     <li><%= link_to "Sign up", new_registration_path(:user) %></li>
-   <% end %>
-  </ul>
- </nav>
+  <h3 class="round"> Hello, <%= current_user.nil? ? "Guest" : current_user.nickname %> </h3>
+  <nav class="round">
+    <ul>
+      <li><%= link_to "Home", root_path %></li>
+      <% if user_signed_in? %>
+        <li><%= link_to "My page", current_user %></li>
+        <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+      <% else %>
+        <li><%= link_to "Sign in", new_session_path(:user) %></li>
+        <li><%= link_to "Sign up", new_registration_path(:user) %></li>
+      <% end %>
+    </ul>
+  </nav>
 </header>

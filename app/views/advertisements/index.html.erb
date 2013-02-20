@@ -1,5 +1,5 @@
 <ul>
-<% @all_ads.each do |ads| %>
+<% @advertisements.each do |ads| %>
   <li><%= ads.id %>. <%= link_to ads.content.first(30), ads %></li>
 <% end %>
 </ul>

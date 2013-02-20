@@ -3,10 +3,16 @@ body {
 }
 
 section {
-  margin-top: 2em;
+  margin-top: 3em;
   font-size: 120%;
   padding: 20px;
   background: #fff;
+}
+
+header h3 {
+  float: left;
+  background-color: white;
+  padding: 0 0.7em;
 }
 
 nav {

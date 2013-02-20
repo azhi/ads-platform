@@ -3,17 +3,14 @@
   <%= link_to "edit", edit_user_registration_path %>
 <% end %>
 
+<%= render "links", :user => @user %>
+
 <p> <%= @user.email %> </p>
 <% @user.advertisements.each do |ads| %>
   <hr>
   <div class="ads-container">
     <%= render 'advertisements/ads_show', :ads => ads %>
-
-    <% if current_user == @user %>
-      <%= link_to "edit", edit_advertisement_path(ads) %>
-      <%= delete_link ads, "Delete ads #{ads.id}" %> <br /> <br />
-    <% end %>
   </div>
 <% end %>
 <hr>
-<%= link_to "Create advertisement", new_advertisement_path(:user_id => @user.id), :class => 'button' %>
+<%= link_to "Create advertisement", new_advertisement_path, :class => 'button' if can? :create, Advertisement %>

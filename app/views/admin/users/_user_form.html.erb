@@ -1,0 +1,10 @@
+<%= simple_form_for(@user, :url => url) do |f| %>
+  <%= f.error_notification %>
+
+  <%= f.input :nickname, :required => true, :autofocus => true %>
+  <%= f.input :email, :required => true, :autofocus => true %>
+  <%= f.input :password, :required => true %>
+  <%= f.input :password_confirmation, :required => true %>
+
+  <%= f.button :submit %>
+<% end %>

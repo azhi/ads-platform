@@ -1,48 +1,47 @@
 class AdvertisementsController < ApplicationController
+  load_and_authorize_resource except: [:transfer_state]
+
   def index
-    @all_ads = Advertisement.all
   end
 
   def new
-    @user = User.find(params[:user_id])
-    @ads = @user.advertisements.build
-    @ads.pictures.build
+    @advertisement.pictures.build
   end
 
   def show
-    @ads = Advertisement.find(params[:id])
   end
 
   def edit
-    @ads = Advertisement.find(params[:id])
   end
 
   def update
-    @ads = Advertisement.find(params[:id])
-
-    if @ads.update_attributes(params[:advertisement])
+    if @advertisement.update_attributes(params[:advertisement])
       flash[:notice] = 'Advertisement was successfully updated.'
-      redirect_to(@ads)
+      redirect_to(@advertisement)
     else
       render :action => "edit"
     end
   end
 
   def create
-    @ads = Advertisement.new(params[:advertisement])
-
-    if @ads.save
+    if @advertisement.save
       flash[:notice] = 'Your advertisement was successfully created.'
-      redirect_to(@ads)
+      redirect_to(@advertisement)
     else
       render :action => "new"
     end
   end
 
   def destroy
-    @ads = Advertisement.find(params[:id])
-    @ads.destroy
+    @advertisement.destroy
 
     redirect_to(advertisements_path)
+  end
+
+  def transfer_state
+    @advertisement = Advertisement.find(params[:id])
+    authorize! params[:transfer_method].to_sym, @advertisement
+    @advertisement.send(params[:transfer_method])
+    redirect_to(advertisement_path(@advertisement))
   end
 end

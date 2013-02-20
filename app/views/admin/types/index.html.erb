@@ -1,0 +1,11 @@
+<ul>
+<% @types.each do |type| %>
+  <li>
+  <%= type.id %>. <%= type.name %>
+  <%= link_to 'edit', edit_admin_type_path(type) %>
+  <%= link_to 'delete', admin_type_path(type), :method => :delete,
+      :confirm => "Sure?", :title => "Delete type #{type.name}" %>
+<% end %>
+</ul>
+
+<%= link_to "Create new type", new_admin_type_path, class: 'button' %>

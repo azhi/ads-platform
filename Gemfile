@@ -22,6 +22,7 @@ gem 'nested_form', '>= 0.3.0'
 gem 'state_machine', '>= 1.1.0'
 gem 'enumerize', '>= 0.5.0'
 gem 'devise', '>= 2.2.0'
+gem 'cancan', '>= 1.6.0'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.12.0'
