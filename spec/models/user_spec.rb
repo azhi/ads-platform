@@ -36,6 +36,32 @@ describe User do
     }.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
   end
 
+  describe "filter_unreadable_advertisements_by user method" do
+    before(:each) do
+      @cr_user = FactoryGirl.create(:user)
+      @read_user = FactoryGirl.create(:user)
+
+      @rough_ads = FactoryGirl.create(:advertisement, :user_id => @cr_user.id)
+
+      @published_ads = FactoryGirl.create(:advertisement, :user_id => @cr_user.id)
+      @published_ads.send_to_approval
+      @published_ads.approve
+      @published_ads.publish
+    end
+
+    it "should show only published ads for another user" do
+      filtered_ads = @cr_user.filter_unreadable_advertisements_by @read_user
+      expect(filtered_ads).not_to include(@rough_ads)
+      expect(filtered_ads).to include(@published_ads)
+    end
+
+    it "should show all ads for himself" do
+      filtered_ads = @cr_user.filter_unreadable_advertisements_by @cr_user
+      expect(filtered_ads).to include(@rough_ads)
+      expect(filtered_ads).to include(@published_ads)
+    end
+  end
+
   describe "abilities" do
     describe "Guest" do
       before(:each) do

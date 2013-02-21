@@ -1,7 +1,14 @@
 class AdvertisementsController < ApplicationController
-  load_and_authorize_resource except: [:transfer_state]
+  load_and_authorize_resource except: [:transfer_state, :all_new]
 
   def index
+    @advertisements = Advertisement.published.page(params[:page])
+  end
+
+  def all_new
+    raise CanCan::AccessDenied unless !current_user.nil? && current_user.role.admin?
+    @advertisements = Advertisement.all_new.page(params[:page])
+    render :action => "index"
   end
 
   def new

@@ -12,6 +12,9 @@ class Advertisement < ActiveRecord::Base
   accepts_nested_attributes_for :pictures, :reject_if => :all_blank,
                                 :allow_destroy => true
 
+  scope :published, where{state == 'published'}
+  scope :all_new, where{state == 'new'}
+
   state_machine :initial => :rough do
     after_transition :approved => :published do |advertisement, transition|
       advertisement.published_at = Date.current
@@ -38,7 +41,7 @@ class Advertisement < ActiveRecord::Base
       transition :approved => :published
     end
 
-    event :transfer_to_archive do
+    event :archive do
       transition :published => :archived
     end
   end

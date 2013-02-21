@@ -1,6 +1,9 @@
 class Admin::UsersController < ApplicationController
   load_and_authorize_resource except: :set_role
 
+  def index
+  end
+
   def edit
   end
 

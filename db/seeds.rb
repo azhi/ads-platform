@@ -27,7 +27,14 @@ admin.skip_confirmation!
 admin.save
 
 ads = []
-ads << Advertisement.create(content: "Bla-bla-bla", type_id: types.first.id, user_id: users.first.id)
+50.times do |i|
+  ad = Advertisement.new(content: "Bla-bla-bla#{i}", type_id: types.first.id, user_id: users.first.id)
+  ad.send_to_approval
+  ad.approve
+  ad.publish
+  ad.save(:validations => false)
+  ads << ad
+end
 ads << Advertisement.create(content: "Other bla", type_id: types.second.id, user_id: users.first.id)
 
 ads.first.pictures.create([{ url: "http://fc05.deviantart.net/fs71/i/2011/265/f/1/limbo__or_smth_like_that_by_shine_blue-d4akqph.jpg" },

@@ -2,6 +2,6 @@
 <% @users.each do |user| %>
   <li>
   <%= user.id %>. <%= link_to user.nickname, user %>
-  <%= render "links", :user => user %>
+  <%= render "users/links", :user => user %>
 <% end %>
 </ul>

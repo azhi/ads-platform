@@ -6,6 +6,9 @@
     <ul>
       <li><%= link_to "Home", root_path %></li>
       <% if user_signed_in? %>
+        <% if current_user.role.admin? %>
+          <li><%= link_to "Admin home", admin_root_path %></li>
+        <% end %>
         <li><%= link_to "My page", current_user %></li>
         <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
       <% else %>

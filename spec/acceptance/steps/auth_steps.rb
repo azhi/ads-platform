@@ -5,6 +5,14 @@ step "there is a user :nickname, his email is :email and his pwd is :password" d
   @user.save
 end
 
+step "there is admin" do
+  @admin = User.new(nickname: 'admin', email: 'somemail@ex.com',
+                    password: 'foobar12', password_confirmation: 'foobar12')
+  @admin.role = :admin
+  @admin.skip_confirmation!
+  @admin.save
+end
+
 step "I sign in as :nickname, :password" do |nickname, password|
   visit "users/sign_in"
   fill_in "Nickname", :with => nickname
@@ -19,16 +27,16 @@ step "I sign out" do
 end
 
 step "I am admin" do
-  @admin = User.new(nickname: 'admin', email: 'somemail@ex.com',
-                    password: 'foobar12', password_confirmation: 'foobar12')
-  @admin.role = :admin
-  @admin.skip_confirmation!
-  @admin.save
+  send "there is admin"
   send "I sign in as :nickname, :password", 'admin', 'foobar12'
 end
 
 step "I go to my page" do
   click_on "My page"
+end
+
+step "I go to list of moderated ads" do
+  visit '/advertisements/all_new'
 end
 
 step "I should be signed in" do

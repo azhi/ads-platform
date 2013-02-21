@@ -23,13 +23,14 @@ gem 'state_machine', '>= 1.1.0'
 gem 'enumerize', '>= 0.5.0'
 gem 'devise', '>= 2.2.0'
 gem 'cancan', '>= 1.6.0'
+gem 'squeel', '>= 1.0.0'
+gem 'will_paginate', '>= 3.0.0'
 
 group :development, :test do
   gem 'rspec-rails', '>= 2.12.0'
 end
 
 group :test do
-  gem 'webrat', '>= 0.7.0'
   gem 'shoulda-matchers', '>= 1.4.0'
   gem 'factory_girl_rails', '>= 4.2.0'
   gem 'turnip', '>= 1.1.0'

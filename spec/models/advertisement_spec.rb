@@ -41,7 +41,7 @@ describe Advertisement do
       expect(@ads.state?(:approved)).to be_true
       @ads.publish
       expect(@ads.state?(:published)).to be_true
-      @ads.transfer_to_archive
+      @ads.archive
       expect(@ads.state?(:archived)).to be_true
       @ads.return_to_rough
       expect(@ads.state?(:rough)).to be_true
