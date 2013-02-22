@@ -21,6 +21,53 @@ describe Advertisement do
 
   it { should have_many(:pictures) }
 
+  describe "publishing/archiving" do
+    before(:each) do
+      @ads = []
+
+      @ads1 = FactoryGirl.create(:advertisement)
+      @ads1.send_to_approval
+      @ads1.approve
+      @ads << @ads1
+
+      @ads2 = FactoryGirl.create(:advertisement)
+      @ads2.send_to_approval
+      @ads << @ads2
+
+      @ads3 = FactoryGirl.create(:advertisement)
+      @ads3.send_to_approval
+      @ads3.approve
+      @ads3.publish
+      @ads3.published_at = Date.current - 3.days
+      @ads3.save
+      @ads << @ads3
+
+      @ads4 = FactoryGirl.create(:advertisement)
+      @ads4.send_to_approval
+      @ads4.approve
+      @ads4.publish
+      @ads << @ads4
+    end
+
+    it "should publish all approved ads" do
+      Advertisement.publish_approved
+      @ads.each{ |ad| ad.reload }
+      expect(@ads1).to be_published
+      expect(@ads2).to be_new
+      expect(@ads3).to be_published
+      expect(@ads4).to be_published
+    end
+
+    it "should archive 3 days old published ads" do
+      Advertisement.archive_published
+      @ads.each{ |ad| ad.reload }
+      expect(@ads1).to be_approved
+      expect(@ads2).to be_new
+      expect(@ads3).to be_archived
+      expect(@ads4).to be_published
+    end
+  end
+
   describe "states testing" do
     before(:each) do
       @ads = FactoryGirl.create(:advertisement)

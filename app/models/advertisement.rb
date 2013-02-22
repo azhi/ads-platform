@@ -15,6 +15,18 @@ class Advertisement < ActiveRecord::Base
   scope :published, where{state == 'published'}
   scope :all_new, where{state == 'new'}
 
+  def self.publish_approved
+    where{ state == "approved" }.each do |ads|
+      ads.publish
+    end
+  end
+
+  def self.archive_published
+    where{ (state == "published") & (published_at <= Date.current - 3.days) }.each do |ads|
+      ads.archive
+    end
+  end
+
   state_machine :initial => :rough do
     after_transition :approved => :published do |advertisement, transition|
       advertisement.published_at = Date.current

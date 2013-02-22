@@ -15,5 +15,6 @@ Feature: Going through all cycle from creating to publishing
     And I approve advertisement
     And sometime after rake task publishes all approved ads
     Then I should see ads "somecontent" with type "SomeType" on ads index
-    And sometime after rake task archives all published ads
+    When 3 days pass
+    And sometime after rake task archives out-of-date published ads
     Then I shouldn't see ads "somecontent" with type "SomeType" on ads index
