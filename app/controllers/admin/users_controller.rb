@@ -40,7 +40,5 @@ class Admin::UsersController < ApplicationController
     authorize! :set_role, @user
     @user.role = params[:role]
     @user.save
-
-    redirect_to(users_path)
   end
 end

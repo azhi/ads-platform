@@ -9,9 +9,7 @@ AdsPlatfrom::Application.routes.draw do
 
   namespace :admin do
     resources :users, :except => [:show] do
-      member do
-        post 'set_role'
-      end
+      post 'set_role', :on => :member
     end
     resources :types, :except => [:show]
     root :to => "pages#home"

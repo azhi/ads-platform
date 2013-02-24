@@ -1,15 +1,17 @@
-<% unless ads.type.nil? %>
-  <p> Type: <%= ads.type.name %> </p>
-<% end %>
-<p> Author: <%= ads.user.nickname %> </p>
-<p>
-  Status: <%= ads.state.humanize %> <br />
-  <% [:return_to_rough, :send_to_approval, :approve, :reject].each do |transfer_method| %>
-    <%= change_state_link transfer_method, ads if ads.send("can_#{transfer_method}?")%>
+<div id="ads_<%= ads.id %>">
+  <% unless ads.type.nil? %>
+    <p> Type: <%= ads.type.name %> </p>
   <% end %>
-</p>
-<%= render 'advertisements/ads_pictures', :ads => ads unless ads.pictures.nil? %>
-<p> <%= ads.content %> </p>
+  <p> Author: <%= ads.user.nickname %> </p>
+  <p>
+    Status: <%= ads.state.humanize %> <br />
+    <% [:return_to_rough, :send_to_approval, :approve, :reject].each do |transfer_method| %>
+      <%= change_state_link transfer_method, ads %>
+    <% end %>
+  </p>
+  <%= render 'advertisements/ads_pictures', :ads => ads unless ads.pictures.nil? %>
+  <p> <%= ads.content %> </p>
 
-<%= link_to "edit", edit_advertisement_path(ads) if can? :update, ads %>
-<%= delete_link ads, "Delete ads #{ads.id}" if can? :destroy, ads%> <br /> <br />
+  <%= link_to "edit", edit_advertisement_path(ads) if can? :update, ads %>
+  <%= delete_link ads, "Delete ads #{ads.id}" if can? :destroy, ads%> <br /> <br />
+</div>

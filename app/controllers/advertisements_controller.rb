@@ -49,6 +49,5 @@ class AdvertisementsController < ApplicationController
     @advertisement = Advertisement.find(params[:id])
     authorize! params[:transfer_method].to_sym, @advertisement
     @advertisement.send(params[:transfer_method])
-    redirect_to(advertisement_path(@advertisement))
   end
 end
