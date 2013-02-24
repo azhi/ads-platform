@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 gem 'sqlite3'
 
 # Gems used only for assets and not required
@@ -35,4 +35,5 @@ group :test do
   gem 'factory_girl_rails', '>= 4.2.0'
   gem 'turnip', '>= 1.1.0'
   gem 'capybara', '>= 2.0.0'
+  gem 'capybara-webkit', '>= 0.14.0'
 end

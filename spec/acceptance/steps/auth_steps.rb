@@ -2,7 +2,7 @@ step "there is a user :nickname, his email is :email and his pwd is :password" d
   @user = User.new(nickname: nickname, email: email,
                    password: password, password_confirmation: password)
   @user.skip_confirmation!
-  @user.save
+  @user.save!
 end
 
 step "there is admin" do
@@ -10,7 +10,7 @@ step "there is admin" do
                     password: 'foobar12', password_confirmation: 'foobar12')
   @admin.role = :admin
   @admin.skip_confirmation!
-  @admin.save
+  @admin.save!
 end
 
 step "I sign in as :nickname, :password" do |nickname, password|

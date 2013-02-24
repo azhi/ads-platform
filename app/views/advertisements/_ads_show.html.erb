@@ -2,7 +2,7 @@
   <% unless ads.type.nil? %>
     <p> Type: <%= ads.type.name %> </p>
   <% end %>
-  <p> Author: <%= ads.user.nickname %> </p>
+  <p> Author: <%= link_to ads.user.nickname, ads.user %> </p>
   <p>
     Status: <%= ads.state.humanize %> <br />
     <% [:return_to_rough, :send_to_approval, :approve, :reject].each do |transfer_method| %>

@@ -1,5 +1,4 @@
-class Admin::PagesController < ApplicationController
+class Admin::PagesController < Admin::AdminController
   def home
-    raise CanCan::AccessDenied unless !current_user.nil? && current_user.role.admin?
   end
 end

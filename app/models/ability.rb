@@ -2,10 +2,9 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    @user = user
+    @user = user || User.new
     guest_rights
-    user_rights if !@user.nil? && @user.role == "user"
-    admin_rights if !@user.nil? && @user.role == "admin"
+    send("#{@user.role}_rights") if @user.persisted?
   end
 
   def guest_rights

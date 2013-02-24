@@ -9,6 +9,6 @@ end
 step "3 days pass" do
   Advertisement.all.each do |ads|
     ads.published_at -= 3.days
-    ads.save
+    ads.save!
   end
 end

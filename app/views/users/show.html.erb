@@ -5,7 +5,6 @@
 
 <%= render "links", :user => @user %>
 
-<p> <%= @user.email %> </p>
 <% @user.filter_unreadable_advertisements_by(current_user).each do |ads| %>
   <hr>
   <div class="ads-container">
