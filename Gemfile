@@ -35,5 +35,5 @@ group :test do
   gem 'factory_girl_rails', '>= 4.2.0'
   gem 'turnip', '>= 1.1.0'
   gem 'capybara', '>= 2.0.0'
-  gem 'capybara-webkit', '>= 0.14.0'
+  gem 'database_cleaner', '>= 0.9.0'
 end

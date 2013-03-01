@@ -14,7 +14,7 @@ step "there is admin" do
 end
 
 step "I sign in as :nickname, :password" do |nickname, password|
-  visit "users/sign_in"
+  visit new_user_session_path
   fill_in "Nickname", :with => nickname
   fill_in "Password", :with => password
   within ('.form-actions') do
@@ -36,7 +36,7 @@ step "I go to my page" do
 end
 
 step "I go to list of moderated ads" do
-  visit '/advertisements/all_new'
+  visit admin_review_ads_path
 end
 
 step "I should be signed in" do

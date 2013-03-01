@@ -21,14 +21,4 @@ class User < ActiveRecord::Base
   validates :email, :presence => true, :format => { :with => EMAIL_REGEX }
 
   enumerize :role, in: [:user, :admin], default: :user
-
-  def ability
-    @ability ||= Ability.new(self)
-  end
-
-  delegate :can?, :cannot?, :to => :ability
-
-  def filter_unreadable_advertisements_by current_user
-    advertisements.delete_if{ |ads| current_user.cannot? :read, ads }
-  end
 end

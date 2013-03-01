@@ -1,6 +1,5 @@
 <%= simple_nested_form_for @advertisement do |f| %>
   <%= f.error_notification %>
-  <%= f.hidden_field :user_id, value: @advertisement.user_id %>
   <%= f.association :type %>
   <%= f.input :content, label_html: { id: 'content_label' }, input_html: { rows: 3 } %>
   <%= f.label "Pictures", class: 'input' %>

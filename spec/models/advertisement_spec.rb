@@ -4,11 +4,13 @@ describe Advertisement do
   before(:each) do
     @type = FactoryGirl.create(:type)
     @user = FactoryGirl.create(:user)
-    @attr = FactoryGirl.attributes_for(:advertisement, :type_id => @type.id, :user_id => @user.id)
+    @attr = FactoryGirl.attributes_for(:advertisement, :type_id => @type.id)
   end
 
   it "should create an advertisement given valid attributes" do
-    Advertisement.create!(@attr)
+    @ads = Advertisement.new(@attr)
+    @ads.user = @user
+    @ads.save!
   end
 
   it { should validate_presence_of(:content) }

@@ -28,14 +28,18 @@ admin.save
 
 ads = []
 50.times do |i|
-  ad = Advertisement.new(content: "Bla-bla-bla#{i}", type_id: types.first.id, user_id: users.first.id)
+  ad = Advertisement.new(content: "Bla-bla-bla#{i}", type_id: types.first.id)
+  ad.user = users.first
+  ad.save(:validations => false)
   ad.send_to_approval
   ad.approve
   ad.publish
-  ad.save(:validations => false)
   ads << ad
 end
-ads << Advertisement.create(content: "Other bla", type_id: types.second.id, user_id: users.first.id)
+ad = Advertisement.new(content: "Other bla", type_id: types.second.id)
+ad.user = users.second
+ad.save!
+ads << ad
 
 ads.first.pictures.create([{ url: "http://fc05.deviantart.net/fs71/i/2011/265/f/1/limbo__or_smth_like_that_by_shine_blue-d4akqph.jpg" },
                            { url: "http://www.scificool.com/images/2012/01/Will-Smth-and-Tommy-Lee-Jones-in-Men-in-Black-3-2012-Movie-Image.jpg" }])

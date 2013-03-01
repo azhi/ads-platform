@@ -1,5 +1,6 @@
 class Advertisement < ActiveRecord::Base
-  attr_accessible :content, :published_at, :type_id, :user_id, :pictures_attributes
+  attr_accessible :content, :published_at, :type_id, :pictures_attributes
+  attr_protected :user_id
 
   belongs_to :type
   has_many :pictures, :dependent => :destroy
@@ -14,6 +15,9 @@ class Advertisement < ActiveRecord::Base
 
   scope :published, where{state == 'published'}
   scope :all_new, where{state == 'new'}
+  scope :accessible_by_and_belongs_to,
+    lambda{ |ability, user| accessible_by(ability).where{user_id == user.id} }
+  scope :include_associations, includes(:type, :user, :pictures)
 
   def self.publish_approved
     where{ state == "approved" }.each do |ads|

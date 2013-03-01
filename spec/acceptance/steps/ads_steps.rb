@@ -19,13 +19,13 @@ step "I approve advertisement" do
 end
 
 step "I should see ads :content with type :type on ads index" do |content, type|
-  visit '/'
+  visit root_path
   expect(page).to have_content(content)
   expect(page).to have_content(type)
 end
 
 step "I shouldn't see ads :content with type :type on ads index" do |content, type|
-  visit '/'
+  visit root_path
   expect(page).not_to have_content(content)
   expect(page).not_to have_content(type)
 end

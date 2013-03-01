@@ -5,11 +5,13 @@
 
 <%= render "links", :user => @user %>
 
-<% @user.filter_unreadable_advertisements_by(current_user).each do |ads| %>
+<%= will_paginate @advertisements %>
+<% @advertisements.each do |ads| %>
   <hr>
   <div class="ads-container">
     <%= render 'advertisements/ads_show', :ads => ads %>
   </div>
 <% end %>
 <hr>
+<%= will_paginate @advertisements %>
 <%= link_to "Create advertisement", new_advertisement_path, :class => 'button' if can? :create, Advertisement %>

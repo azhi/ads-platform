@@ -1,14 +1,9 @@
 class AdvertisementsController < ApplicationController
-  load_and_authorize_resource except: [:transfer_state, :all_new]
+  load_and_authorize_resource except: [:transfer_state]
 
   def index
-    @advertisements = @advertisements.published.page(params[:page])
-  end
-
-  def all_new
-    raise CanCan::AccessDenied unless !current_user.nil? && current_user.role.admin?
-    @advertisements = @advertisements.all_new.page(params[:page])
-    render :action => "index"
+    @advertisements = @advertisements.published.
+      include_associations.page(params[:page])
   end
 
   def new
@@ -31,6 +26,7 @@ class AdvertisementsController < ApplicationController
   end
 
   def create
+    @advertisement.user = current_user
     if @advertisement.save
       flash[:notice] = 'Your advertisement was successfully created.'
       redirect_to(@advertisement)

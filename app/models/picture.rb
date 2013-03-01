@@ -1,5 +1,6 @@
 class Picture < ActiveRecord::Base
-  attr_accessible :url, :advertisement_id
+  attr_accessible :url
+  attr_protected :advertisement_id
 
   belongs_to :advertisement
 

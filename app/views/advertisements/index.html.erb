@@ -1,7 +1,7 @@
 <%= will_paginate %>
 <% @advertisements.each do |ads| %>
   <hr>
-  <%= render 'ads_show', :ads => ads %>
+  <%= render 'advertisements/ads_show', :ads => ads %>
 <% end %>
 <hr>
 <%= will_paginate %>

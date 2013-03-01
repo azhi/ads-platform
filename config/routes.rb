@@ -4,7 +4,6 @@ AdsPlatfrom::Application.routes.draw do
   resources :users, :only => [:show]
   resources :advertisements do
     post 'transfer_state', :on => :member
-    get 'all_new', :on => :collection
   end
 
   namespace :admin do
@@ -12,6 +11,7 @@ AdsPlatfrom::Application.routes.draw do
       post 'set_role', :on => :member
     end
     resources :types, :except => [:show]
+    match "/review_ads", :to => "advertisements#all_new"
     root :to => "pages#home"
   end
 
