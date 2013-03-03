@@ -1,12 +1,10 @@
 require 'spec_helper'
 
 describe Picture do
-  before(:each) do
+  it "should create a picture given valid attributes" do
     @ads = FactoryGirl.create(:advertisement)
     @attr = FactoryGirl.attributes_for(:picture)
-  end
 
-  it "should create a picture given valid attributes" do
     @ads.pictures.create!(@attr)
   end
 

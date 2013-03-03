@@ -8,6 +8,8 @@ FactoryGirl.define do
     email                         { "user#{generate(:user_id)}@example.com" }
     password                      "foobar12"
     password_confirmation         "foobar12"
+
+    after(:build) { |user| user.skip_confirmation! }
   end
 
   factory :type do

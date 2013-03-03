@@ -1,11 +1,9 @@
 require 'spec_helper'
 
 describe Type do
-  before(:each) do
-    @attr = FactoryGirl.attributes_for(:type)
-  end
-
   it "should create a type given valid attributes" do
+    @attr = FactoryGirl.attributes_for(:type)
+
     Type.create!(@attr)
   end
 

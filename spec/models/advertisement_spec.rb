@@ -1,13 +1,11 @@
 require 'spec_helper'
 
 describe Advertisement do
-  before(:each) do
+  it "should create an advertisement given valid attributes" do
     @type = FactoryGirl.create(:type)
     @user = FactoryGirl.create(:user)
     @attr = FactoryGirl.attributes_for(:advertisement, :type_id => @type.id)
-  end
 
-  it "should create an advertisement given valid attributes" do
     @ads = Advertisement.new(@attr)
     @ads.user = @user
     @ads.save!
@@ -23,31 +21,29 @@ describe Advertisement do
 
   it { should have_many(:pictures) }
 
-  describe "publishing/archiving" do
+  context "publishing/archiving" do
     before(:each) do
       @ads = []
 
-      @ads1 = FactoryGirl.create(:advertisement)
-      @ads1.send_to_approval
-      @ads1.approve
+      @ads1 = FactoryGirl.build(:advertisement)
+      @ads1.state = :approved
+      @ads1.save!
       @ads << @ads1
 
-      @ads2 = FactoryGirl.create(:advertisement)
-      @ads2.send_to_approval
+      @ads2 = FactoryGirl.build(:advertisement)
+      @ads2.state = :waiting_for_approval
+      @ads2.save!
       @ads << @ads2
 
-      @ads3 = FactoryGirl.create(:advertisement)
-      @ads3.send_to_approval
-      @ads3.approve
-      @ads3.publish
+      @ads3 = FactoryGirl.build(:advertisement)
+      @ads3.state = :published
       @ads3.published_at = Date.current - 3.days
-      @ads3.save
+      @ads3.save!
       @ads << @ads3
 
-      @ads4 = FactoryGirl.create(:advertisement)
-      @ads4.send_to_approval
-      @ads4.approve
-      @ads4.publish
+      @ads4 = FactoryGirl.build(:advertisement)
+      @ads4.state = :published
+      @ads4.save!
       @ads << @ads4
     end
 
@@ -70,7 +66,7 @@ describe Advertisement do
     end
   end
 
-  describe "states testing" do
+  context "states testing" do
     before(:each) do
       @ads = FactoryGirl.create(:advertisement)
     end
