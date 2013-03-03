@@ -1,5 +1,5 @@
 <p>
-  <%= link_to "Moderate new advertisements (#{Advertisement.all_new.count})",
+  <%= link_to "Moderate new advertisements (#{Advertisement.waiting_for_approval.count})",
     admin_review_ads_path %>
 </p>
 <p> <%= link_to "Manage types", admin_types_path %> </p>

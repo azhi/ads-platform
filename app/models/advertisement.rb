@@ -13,24 +13,6 @@ class Advertisement < ActiveRecord::Base
   accepts_nested_attributes_for :pictures, :reject_if => :all_blank,
                                 :allow_destroy => true
 
-  scope :published, where{state == 'published'}
-  scope :all_new, where{state == 'new'}
-  scope :accessible_by_and_belongs_to,
-    lambda{ |ability, user| accessible_by(ability).where{user_id == user.id} }
-  scope :include_associations, includes(:type, :user, :pictures)
-
-  def self.publish_approved
-    where{ state == "approved" }.each do |ads|
-      ads.publish
-    end
-  end
-
-  def self.archive_published
-    where{ (state == "published") & (published_at <= Date.current - 3.days) }.each do |ads|
-      ads.archive
-    end
-  end
-
   state_machine :initial => :rough do
     after_transition :approved => :published do |advertisement, transition|
       advertisement.published_at = Date.current
@@ -38,19 +20,19 @@ class Advertisement < ActiveRecord::Base
     end
 
     event :send_to_approval do
-      transition :rough => :new
+      transition :rough => :waiting_for_approval
     end
 
     event :return_to_rough do
-      transition [:new, :approved, :rejected, :published, :archived] => :rough
+      transition [:waiting_for_approval, :approved, :rejected, :published, :archived] => :rough
     end
 
     event :approve do
-      transition :new => :approved
+      transition :waiting_for_approval => :approved
     end
 
     event :reject do
-      transition :new => :rejected
+      transition :waiting_for_approval => :rejected
     end
 
     event :publish do
@@ -59,6 +41,30 @@ class Advertisement < ActiveRecord::Base
 
     event :archive do
       transition :published => :archived
+    end
+  end
+
+  metaclass = class << self; self; end;
+  state_machine.states.each do |st|
+    block = Proc.new { where{ state == st.name.to_s } }
+    define_method(st.name, &block)
+    metaclass.send(:define_method, st.name, &block)
+  end
+
+  scope :accessible_by_and_belongs_to,
+    lambda{ |ability, user| accessible_by(ability).where{ user_id == user.id } }
+  scope :include_associations, includes(:type, :user, :pictures)
+  scope :timed_out, where{ published_at <= Date.current - 3.days }
+
+  def self.publish_approved
+    approved.each do |ads|
+      ads.publish
+    end
+  end
+
+  def self.archive_published
+    published.timed_out.each do |ads|
+      ads.archive
     end
   end
 end

@@ -48,18 +48,6 @@ describe User do
       @published_ads.approve
       @published_ads.publish
     end
-
-    it "should show only published ads for another user" do
-      filtered_ads = @cr_user.filter_unreadable_advertisements_by @read_user
-      expect(filtered_ads).not_to include(@rough_ads)
-      expect(filtered_ads).to include(@published_ads)
-    end
-
-    it "should show all ads for himself" do
-      filtered_ads = @cr_user.filter_unreadable_advertisements_by @cr_user
-      expect(filtered_ads).to include(@rough_ads)
-      expect(filtered_ads).to include(@published_ads)
-    end
   end
 
   describe "abilities" do

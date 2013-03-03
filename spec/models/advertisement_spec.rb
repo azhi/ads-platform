@@ -55,7 +55,7 @@ describe Advertisement do
       Advertisement.publish_approved
       @ads.each{ |ad| ad.reload }
       expect(@ads1).to be_published
-      expect(@ads2).to be_new
+      expect(@ads2).to be_waiting_for_approval
       expect(@ads3).to be_published
       expect(@ads4).to be_published
     end
@@ -64,7 +64,7 @@ describe Advertisement do
       Advertisement.archive_published
       @ads.each{ |ad| ad.reload }
       expect(@ads1).to be_approved
-      expect(@ads2).to be_new
+      expect(@ads2).to be_waiting_for_approval
       expect(@ads3).to be_archived
       expect(@ads4).to be_published
     end
@@ -85,7 +85,7 @@ describe Advertisement do
 
     it "should go through successfull cycle with correct states" do
       @ads.send_to_approval
-      expect(@ads.state?(:new)).to be_true
+      expect(@ads.state?(:waiting_for_approval)).to be_true
       @ads.approve
       expect(@ads.state?(:approved)).to be_true
       @ads.publish
@@ -98,7 +98,7 @@ describe Advertisement do
 
     it "should go through failed cycle with correct states" do
       @ads.send_to_approval
-      expect(@ads.state?(:new)).to be_true
+      expect(@ads.state?(:waiting_for_approval)).to be_true
       @ads.reject
       expect(@ads.state?(:rejected)).to be_true
       @ads.return_to_rough

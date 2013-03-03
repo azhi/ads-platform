@@ -3,11 +3,11 @@ require 'spec_helper'
 describe Picture do
   before(:each) do
     @ads = FactoryGirl.create(:advertisement)
-    @attr = FactoryGirl.attributes_for(:picture, :advertisement_id => @ads.id)
+    @attr = FactoryGirl.attributes_for(:picture)
   end
 
   it "should create a picture given valid attributes" do
-    Picture.create!(@attr)
+    @ads.pictures.create!(@attr)
   end
 
   it { should validate_presence_of(:url) }

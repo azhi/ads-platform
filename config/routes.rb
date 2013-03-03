@@ -11,7 +11,7 @@ AdsPlatfrom::Application.routes.draw do
       post 'set_role', :on => :member
     end
     resources :types, :except => [:show]
-    match "/review_ads", :to => "advertisements#all_new"
+    match "/review_ads", :to => "advertisements#waiting_for_approval"
     root :to => "pages#home"
   end
 
