@@ -54,7 +54,7 @@ class Advertisement < ActiveRecord::Base
   scope :accessible_by_and_belongs_to,
     lambda{ |ability, user| accessible_by(ability).where{ user_id == user.id } }
   scope :include_associations, includes(:type, :user, :pictures)
-  scope :timed_out, where{ published_at <= Date.current - 3.days }
+  scope :timed_out, -> { where{ published_at <= Date.current - 3.days } }
 
   def self.publish_approved
     approved.each do |ads|
