@@ -33,7 +33,7 @@ describe User do
   it "shouldn't allow mass-assigment of role" do
     expect {
       @attr = FactoryGirl.attributes_for(:user)
-      user = User.create(@attr.merge(:role => :admin))
+      user = User.create!(@attr.merge(:role => :admin))
     }.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
   end
 

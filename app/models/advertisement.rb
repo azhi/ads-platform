@@ -1,6 +1,6 @@
 class Advertisement < ActiveRecord::Base
-  attr_accessible :content, :published_at, :type_id, :pictures_attributes
-  attr_protected :user_id
+  attr_accessible :content, :type_id, :pictures_attributes
+  attr_protected :user_id, :state, :published_at
 
   belongs_to :type
   has_many :pictures, :dependent => :destroy

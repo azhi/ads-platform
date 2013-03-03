@@ -79,6 +79,20 @@ describe Advertisement do
       expect(@ads.state?(:rough)).to be_true
     end
 
+    it "shouldn't allow mass-assigment of state" do
+      expect {
+        @attr = FactoryGirl.attributes_for(:advertisement)
+        ads = Advertisement.create!(@attr.merge(:state => :published))
+      }.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+
+    it "shouldn't allow mass-assigment of published_at" do
+      expect {
+        @attr = FactoryGirl.attributes_for(:advertisement)
+        ads = Advertisement.create!(@attr.merge(:published_at => Date.current + 5.days))
+      }.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+    end
+
     it "should go through successfull cycle with correct states" do
       @ads.send_to_approval
       expect(@ads.state?(:waiting_for_approval)).to be_true
