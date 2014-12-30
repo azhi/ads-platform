@@ -27,7 +27,7 @@ describe User do
 
   it "should create a user with default role :user" do
     user = FactoryGirl.create(:user)
-    expect(user.role).to eq("user")
+    expect(user.role).to eq("user2")
   end
 
   it "shouldn't allow mass-assigment of role" do
